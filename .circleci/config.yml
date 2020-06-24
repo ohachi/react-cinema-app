@@ -31,15 +31,15 @@ aliases:
         sudo apt-get -y -qq update
         sudo apt-get install -y awscli
         sudo apt-get install -y python-pip python-dev build-essential  
-   - &build-project
-      run :
-        name: Build project
-        command: |
-          npm install
-          npm run build
-          cd build
-          zip ../build.zip -r *.[^.]*
-          echo "Build successful"
+  - &build-project
+    run :
+      name: Build project
+      command: |
+        npm install
+        npm run build
+        cd build
+        zip ../build.zip -r *.[^.]*
+        echo "Build successful"
 
 jobs:
   build:

@@ -58,8 +58,7 @@ jobs:
       - checkout
       - *show-currert-branch-name
       - *install-aws-cli
-      - *build-project
-        
+      - *build-project    
       - run :
           name: Deploy to AWS S3
           command: |
@@ -80,7 +79,6 @@ jobs:
       - *show-currert-branch-name
       - *install-aws-cli
       - *build-project
-        
       - run :
           name: Deploy to AWS Cloudfront
           command: |

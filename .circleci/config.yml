@@ -9,7 +9,7 @@ executors:
 
   slack-executor:
     docker:
-      - image : 'cbuilds/base:latest'
+      - image: 'cibuilds/base:latest'
     resource_class: small
 
 aliases:

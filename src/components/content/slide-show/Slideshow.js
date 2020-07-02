@@ -9,19 +9,22 @@ const Slideshow = (props) => {
     slideShow: images[0],
     slideIndex: 0
   });
-
-  const [currentIndex, setcurrentIndex] = useState(0);
+  const [currentIndex, setCurrentIndex] = useState(0);
   const [sliderInterval, setSliderInterval] = useState(0);
 
   const { slideShow, slideIndex } = state;
   let currentSlideIndex = 0;
 
   useEffect(() => {
+    setState({
+      ...state,
+      slideIndex: 0,
+      slideShow: images[0]
+    });
     if (auto) {
       const timeInterval = setInterval(() => {
-        autoMouseSlide();
+        autoMoveSlide();
       }, 5000);
-
       setSliderInterval(timeInterval);
 
       return () => {
@@ -31,9 +34,9 @@ const Slideshow = (props) => {
     }
 
     // eslint-disable-next-line
-  }, []);
+  }, [images]);
 
-  const autoMouseSlide = () => {
+  const autoMoveSlide = () => {
     let lastIndex = 0;
     lastIndex = currentSlideIndex + 1;
     currentSlideIndex = lastIndex >= images.length ? 0 : lastIndex;
@@ -50,18 +53,17 @@ const Slideshow = (props) => {
       if (currentIndex <= 0) {
         index = images.length - 1;
       } else {
-        index--;
+        index -= 1;
       }
     } else {
       if (currentIndex < images.length) {
-        index++;
+        index += 1;
       }
       if (index === images.length) {
         index = 0;
       }
     }
-    setcurrentIndex(index);
-
+    setCurrentIndex(index);
     setState((prev) => ({
       ...prev,
       slideIndex: index,
@@ -81,8 +83,8 @@ const Slideshow = (props) => {
   const Indicators = (props) => {
     const { currentSlide } = props;
     const listIndicators = images.map((slide, i) => {
-      const butnClasses = i === currentSlide ? 'slider-navButton slider-navButton--active' : 'slider-navButton';
-      return <button className={butnClasses} key={i} />;
+      const btnClasses = i === currentSlide ? 'slider-navButton slider-navButton--active' : 'slider-navButton';
+      return <button className={btnClasses} key={i} />;
     });
     return <div className="slider-nav">{listIndicators}</div>;
   };
@@ -90,7 +92,7 @@ const Slideshow = (props) => {
   return (
     <>
       <div className="slider">
-        <div className="slider-slies">{images && images.length && slideShow && <div className="slider-image" style={{ backgroundImage: `url(${slideShow.url})` }}></div>}</div>
+        <div className="slider-slides">{images && images.length && slideShow && <div className="slider-image" style={{ backgroundImage: `url(${slideShow.url})` }}></div>}</div>
         <Indicators currentSlide={slideIndex} />
         {showArrows ? <RenderArrows /> : null}
       </div>
